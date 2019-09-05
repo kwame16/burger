@@ -1,23 +1,29 @@
-// Require/import the HTTP module
-var http = require("http");
+var express = require("express");
 
-// Define a port to listen for incoming requests
-var PORT = 8080;
+var PORT = process.env.PORT || 8080;
 
-// Create a generic function to handle requests and responses
-function handleRequest(request, response) {
+var app = express();
 
-  // Send the below string to the client when the user visits the PORT URL
-  response.end("It Works!! Path Hit: " + request.url);
-}
+// Serve static content for the app from the "public" directory in the application directory.
+app.use(express.static("public"));
 
-// Use the Node HTTP package to create our server.
-// Pass the handleRequest function to empower it with functionality.
-var server = http.createServer(handleRequest);
+// Parse application body as JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+// Import routes and give the server access to them.
+var routes = require("./controller/burgers_controller.js");
+
+app.use(routes);
 
 // Start our server so that it can begin listening to client requests.
-server.listen(PORT, function() {
-
+app.listen(PORT, function() {
   // Log (server-side) when our server has started
   console.log("Server listening on: http://localhost:" + PORT);
 });
