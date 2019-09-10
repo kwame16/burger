@@ -16,9 +16,10 @@ $(function() {
         function() {
           console.log("changed devour to", newdevour);
           // Reload the page to get the updated list
-          loburgerion.reload();
+        
         }
       );
+      location.reload();
     });
   
     $(".create-form").on("submit", function(event) {
@@ -38,9 +39,10 @@ $(function() {
         function() {
           console.log("created new burger");
           // Reload the page to get the updated list
-          loburgerion.reload();
+          
         }
       );
+      location.reload();
     });
   
     $(".delete-burger").on("click", function(event) {
@@ -53,9 +55,10 @@ $(function() {
         function() {
           console.log("deleted burger", id);
           // Reload the page to get the updated list
-          loburgerion.reload();
+          
         }
       );
+      location.reload();
     });
   });
   
